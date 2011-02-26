@@ -10,7 +10,7 @@
  * The function inserts an asynchronous script tag that pulls in the analytics
  * JS. The following strings can be find-replaced in the binary:
  *   PA-12345-6: the analytics property ID
- *   bin/pa.min.js: URL to the analytics JS
+ *   bin/p.min.js: URL to the analytics JS
  */
 var _paq = _paq || [];
 _paq.push({pid: 'PA-12345-6'});
@@ -23,6 +23,6 @@ _paq.push('page');
   a = d.getElementsByTagName('script')[0]; //
   s.async = true;
   s.type = 'text/javascript';
-  s.src = 'bin/pa.min.js';
+  s.src = 'bin/p.min.js';
   a.parentNode.insertBefore(s, a);
 }());

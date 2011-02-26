@@ -2,17 +2,17 @@ describe("Pwnalytics event posting", function() {
   describe("eventUrl", function() {
     var url = null;
     beforeEach(function() {
-      url = Pwnalytics.eventUrl({s1: 'sval1', s2: 'sval2'}, 'evnm',
-          {ev1: 'evalue1', ev2: 'evalue2'});
+      url = Pwnalytics.eventUrl({s1: 'sval1', s2: 'sval&2'}, 'evnm',
+          {ev1: 'evalue1', ev2: 'evalue?2'});
     });
     it("should include the event name", function() {
       expect(url).toContain('__=evnm');
     });
     it("should include the session data", function() {
-      expect(url).toContain('__s1=sval1&__s2=sval2');
+      expect(url).toContain('__s1=sval1&__s2=sval%262');
     });
     it("should include the event data", function() {
-      expect(url).toContain('ev1=evalue1&ev2=evalue2');
+      expect(url).toContain('ev1=evalue1&ev2=evalue%3F2');
     });
   });
   
