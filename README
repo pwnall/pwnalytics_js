@@ -1,0 +1,76 @@
+Pwnalytics is an open-source Web analytics solution. This project contains the
+two JavaScript pieces loaded by Website users.
+
+REQUIREMENTS
+
+The Pwnalytics JS has been tested and works against the following browsers:
+* Chromium / Google Chrome 6.0+
+* Firefox 3.6+
+* Mobile Safari in iOS 3+
+* Internet Explorer 6+
+
+Patches for extending compatibility are always welcome.
+
+
+USAGE
+
+The deployment process is heavily inspired from Google Analytics. Tracked pages
+should include the script in bin/insert.min.js in a
+<script type="text/javascript"> tag at the end of their <head> tag. Find/replace
+the following strings:
+* PA-12345-6 -- the property ID
+* bin/p.min.js -- a URL that serves the content at bin/p.min.js
+
+The analytics server should serve bin/p.min.js, after find-replacing the
+following:
+* http://ticks.pwnb.us/p.gif -- URL that receives GETs with analytics data
+
+The analytics server should serve bin/p.gif in response to analytics data GETs,
+to keep browsers happy.
+
+The analytic data GETs parameters follow these conventions:
+* __ is the event name ('page' is a pageview, everything else is user-defined)
+* Params that start with __ are session parameters
+** __pid is the property ID
+** __uid is a user ID that persists across visits from the same browser
+* All other params are user-defined.
+
+The client-side JavaScript is provided the following API for posting analytics
+data to the server.
+* _paq.push('eventName') sends an event with nothing but a name
+* _paq.push(['eventname', {param: 'value'}]) sends an event with metadata
+* _paq.push(function() { ... }) calls a function after Pwnalytics is loaded
+* _paq.push({property: 'value'}) sets a session property
+
+
+BUILDING
+
+Pwnalytics requires RubyGems, Jasmine, and Juicer with the YUI Compressor and
+JSLint extensions. Once dependencies are installed, the following command will
+build and test both the development and production versions of the library. 
+
+    rake
+
+The dependencies can be downloaded from the following locations:
+* RubyGems -- http://rubygems.org/ 
+* Jasmine -- gem install jasmine
+* Juicer -- gem install juicer
+* Juicer extensions -- juicer install jslint; juicer install yui_compressor
+
+
+TESTING
+
+Testing is fully automated using Jasmine. All patches should add tests for the
+changed functionality in the spec/ directory.
+
+For maximum iterating speed, keep a Jasmine testing server running.
+
+1. Start the server by running
+
+    rake jasmine
+
+2. Make some changes to the source code, then rebuild
+
+    rake build
+    
+3. Load or refresh http://localhost:8888 in your browser.
