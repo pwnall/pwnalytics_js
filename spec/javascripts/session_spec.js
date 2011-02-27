@@ -8,21 +8,21 @@ describe("Pwnalytics session", function() {
     expect(Pwnalytics.session.uid).toBe(Pwnalytics.uid());
   });
   it("should have a correct pid", function() {
-    expect(Pwnalytics.session.pid).toBe('PA-12345-6');
+    expect(Pwnalytics.session.pid).toBe('AA123456');
   });
 
   describe("ammendSession", function() {
     it("should add a single property", function() {
       Pwnalytics.ammendSession({vid: 'videos'});
       expect(Pwnalytics.session.vid).toBe('videos');
-      expect(Pwnalytics.session.pid).toBe('PA-12345-6');
+      expect(Pwnalytics.session.pid).toBe('AA123456');
     });
     it("should add/update properties", function() {
       Pwnalytics.ammendSession({
         vid: 'videos', uid: 'magicuser', '__ignore': 'should be ignored'
       });
       expect(Pwnalytics.session.vid).toBe('videos');
-      expect(Pwnalytics.session.pid).toBe('PA-12345-6');
+      expect(Pwnalytics.session.pid).toBe('AA123456');
       expect(Pwnalytics.session.uid).toBe('magicuser');
       expect(Pwnalytics.session['__ignore']).toBeFalsy();
     });

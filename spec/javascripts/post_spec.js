@@ -14,6 +14,9 @@ describe("Pwnalytics event posting", function() {
     it("should include the event data", function() {
       expect(url).toContain('ev1=evalue1&ev2=evalue%3F2');
     });
+    it("should start with the base URL", function() {
+      expect(url).toMatch(/^bin\/p.gif\?/);
+    });
   });
   
   describe("image", function() {

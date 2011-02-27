@@ -15,10 +15,10 @@ Pwnalytics.dropUid = function () {
 
 /** Randomly-generated UID. */
 Pwnalytics.randomUid = function () {
-  var timestamp = (new Date()).getTime().toString();
-  var random1 = Math.random().toString().substring(1);
-  var random2 = Math.random().toString().substring(1);
-  return timestamp + random1 + random2;
+  var timestamp = (new Date()).getTime().toString(16);
+  var random1 = Math.floor(Math.random() * 0x7fffffff).toString(16);
+  var random2 = Math.floor(Math.random() * 0x7fffffff).toString(16);
+  return timestamp + '.' + random1 + random2;
 };
 
 /** A unique ID associated with a user (actually browser). */

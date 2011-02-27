@@ -18,12 +18,12 @@ The deployment process is heavily inspired from Google Analytics. Tracked pages
 should include the script in bin/insert.min.js in a
 <script type="text/javascript"> tag at the end of their <head> tag. Find/replace
 the following strings:
-* PA-12345-6 -- the property ID
-* bin/p.min.js -- a URL that serves the content at bin/p.min.js
+* AA123456 -- the property ID
+* bin/p.min.js -- a URL that serves the main JS file at bin/p.min.js
 
 The analytics server should serve bin/p.min.js, after find-replacing the
 following:
-* http://ticks.pwnb.us/p.gif -- URL that receives GETs with analytics data
+* bin/p.gif -- URL that receives GETs with analytics data
 
 The analytics server should serve bin/p.gif in response to analytics data GETs,
 to keep browsers happy.

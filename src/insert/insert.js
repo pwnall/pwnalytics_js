@@ -9,11 +9,11 @@
  * 
  * The function inserts an asynchronous script tag that pulls in the analytics
  * JS. The following strings can be find-replaced in the binary:
- *   PA-12345-6: the analytics property ID
+ *   AA123456: the analytics property ID
  *   bin/p.min.js: URL to the analytics JS
  */
 var _paq = _paq || [];
-_paq.push({pid: 'PA-12345-6'});
+_paq.push({pid: 'AA123456'});
 _paq.push('page');
 (function () {
   var d = document,  // d aliases document, for a shorter script

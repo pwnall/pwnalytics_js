@@ -1,7 +1,7 @@
 /** Logic for communicating events to the Pwnalytics server. */
 
 /** The root of the post URL. */
-Pwnalytics.postUrl = 'http://ticks.pwnb.us/p.gif';
+Pwnalytics.postUrl = 'bin/p.gif';
 
 /**
  * Posts an event to a Pwnalytics server.
