@@ -11,6 +11,7 @@ Pwnalytics.postUrl = 'bin/p.gif';
  */
 Pwnalytics.post = function (eventName, eventData) {
   this.session.time = (new Date()).getTime();
+  this.session.px = this.screenInfoString();
   this.image(this.eventUrl(this.session, eventName, eventData));
 };
 

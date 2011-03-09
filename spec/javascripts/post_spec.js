@@ -63,15 +63,20 @@ describe("Pwnalytics event posting", function() {
   
   describe("post", function() {
     var goldDate = new Date(1337);
+    var goldScreenInfo = '1.3.3.7';
     var eventData = {occurred: 'today'};
     beforeEach(function() {
       spyOn(window, 'Date').andReturn(goldDate);
+      spyOn(Pwnalytics, 'screenInfoString').andReturn(goldScreenInfo);
       spyOn(Pwnalytics, 'eventUrl').andReturn('http://event.url.gif');
       spyOn(Pwnalytics, 'image');
       Pwnalytics.post('awesomeness', eventData);
     });
     it("should set the session time", function() {
       expect(Pwnalytics.session.time).toBe(1337);
+    });
+    it("should set the session screen metrics", function() {
+      expect(Pwnalytics.session.px).toBe(goldScreenInfo);
     });
     it("should generate an image URL", function() {
       expect(Pwnalytics.eventUrl).toHaveBeenCalledWith(
