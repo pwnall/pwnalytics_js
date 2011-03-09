@@ -7,8 +7,8 @@
  *   - screen width
  *   - screen height
  *   - color depth
- *   - document height
  *   - document width
+ *   - document height
  *   - window X position
  *   - window Y position
  */
