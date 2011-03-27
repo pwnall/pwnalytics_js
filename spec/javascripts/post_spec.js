@@ -1,4 +1,11 @@
 describe("Pwnalytics event posting", function() {
+  beforeEach(function () {
+    Pwnalytics.pendingEvents = 42;
+  });
+  afterEach(function () {
+    Pwnalytics.pendingEvents = 0;
+  });
+
   describe("eventUrl", function() {
     var url = null;
     beforeEach(function() {
@@ -39,6 +46,10 @@ describe("Pwnalytics event posting", function() {
       expect(fakeImg.onerror).not.toBe(null);
       expect(fakeImg.onerror).toBe(fakeImg.onabort);
     });
+    it("should set the image's load handler correctly", function () {
+      fakeImg.onload();
+      expect(Pwnalytics.pendingEvents).toBe(41);
+    });
     describe("onerror", function() {
       var delayed = null;
       var timeout = null;
@@ -59,6 +70,17 @@ describe("Pwnalytics event posting", function() {
             toHaveBeenCalledWith("http://localhost/invalid");
       });
     });
+  });
+  
+  describe("changePendingEvents", function() {
+    it("should increase pendingEvents when given +1", function() {
+      Pwnalytics.changePendingEvents(1);
+      expect(Pwnalytics.pendingEvents).toBe(43);
+    })
+    it("should decrease pendingEvents when given -1", function() {
+      Pwnalytics.changePendingEvents(-1);
+      expect(Pwnalytics.pendingEvents).toBe(41);
+    })
   });
   
   describe("post", function() {
@@ -84,6 +106,9 @@ describe("Pwnalytics event posting", function() {
     });
     it("should inject an image", function() {
       expect(Pwnalytics.image).toHaveBeenCalledWith('http://event.url.gif');
+    });
+    it("should increase the number of pending events", function () {
+      expect(Pwnalytics.pendingEvents).toBe(43);
     });
   });
 });

@@ -1,6 +1,7 @@
 Pwnalytics is an open-source Web analytics solution. This project contains the
 two JavaScript pieces loaded by Website users.
 
+
 REQUIREMENTS
 
 The Pwnalytics JS has been tested and works against the following browsers:
@@ -41,6 +42,7 @@ data to the server.
 * _paq.push(['eventname', {param: 'value'}]) sends an event with metadata
 * _paq.push(function() { ... }) calls a function after Pwnalytics is loaded
 * _paq.push({property: 'value'}) sets a session property
+* _paq.length counts events posted by _paq.push but not processed by the server
 
 
 BUILDING

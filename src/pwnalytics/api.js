@@ -36,6 +36,9 @@ Pwnalytics.api = function (request) {
   }
 };
 
+/** Object that replaces the _paq array providing a bridge to our API. */
+Pwnalytics.apiProxy = { push: Pwnalytics.api, length: 0 };
+
 /**
  * Called after the Pwnalytics JS is fully loaded and everything is defined.
  */
@@ -46,7 +49,7 @@ Pwnalytics.onLoad = function () {
   // The requests that got queued up before Pwnalytics got loaded.
   var requests = window._paq;
   // Replace the inital array with an object redirecing push() calls to our API.
-  window._paq = { push: Pwnalytics.api };
+  window._paq = Pwnalytics.apiProxy;
   // Honor the old requests.
   for (var i = 0; i < requests.length; i += 1) {
     Pwnalytics.api(requests[i]);

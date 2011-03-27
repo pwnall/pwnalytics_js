@@ -20,7 +20,32 @@ describe("Pwnalytics API", function() {
     });
   });
   
+  describe("_paq.length", function() {
+    beforeEach(function() {
+      Pwnalytics.pendingEvents = 0;
+    });
+    it("should be 0 before any event is posted", function() {
+      expect(_paq.length).toBe(0);
+    });
+    it("should be 1 right after an event is posted", function() {
+      _paq.push(['anEvent', {someProp: 42}]);
+      expect(_paq.length).toBe(1);
+    });
+    describe("after client messes with _paq.length", function() {
+      beforeEach(function() {
+        _paq.length = 42;
+      });
+      it("should still be 1 right after an event is posted", function() {
+        _paq.push(['anEvent', {someProp: 42}]);
+        expect(_paq.length).toBe(1);
+      });
+    });
+  });
+  
   describe("onLoad", function() {
+    beforeEach(function() {
+      Pwnalytics.pendingPosts = 0;
+    });
     it("relays requests in _paq to Pwnalytics.api", function() {
       var fn = function() { };
       _paq = [{some: 'object'}, 'event', fn];
