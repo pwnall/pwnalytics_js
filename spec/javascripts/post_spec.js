@@ -8,9 +8,11 @@ describe("Pwnalytics event posting", function() {
 
   describe("eventUrl", function() {
     var url = null;
+    var unicodeUrl = null;
     beforeEach(function() {
       url = Pwnalytics.eventUrl({s1: 'sval1', s2: 'sval&2'}, 'evnm',
           {ev1: 'evalue1', ev2: 'evalue?2'});
+      unicodeUrl = Pwnalytics.eventUrl({}, '', {u: '\u4F60\u597D'});
     });
     it("should include the event name", function() {
       expect(url).toContain('__=evnm');
@@ -24,6 +26,9 @@ describe("Pwnalytics event posting", function() {
     it("should start with the base URL", function() {
       expect(url).toMatch(/^bin\/p.gif\?/);
     });
+    it("should use UTF-8 to encode unicode data", function() {
+      expect(unicodeUrl).toMatch(/u=%E4%BD%A0%E5%A5%BD/)
+    })
   });
   
   describe("image", function() {

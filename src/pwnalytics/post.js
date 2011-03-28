@@ -26,17 +26,18 @@ Pwnalytics.post = function (eventName, eventData) {
  */
 Pwnalytics.eventUrl = function (session, eventName, eventData) {
   var fragments = [this.postUrl + '?__=' + eventName];
+  var escapeFn = window.encodeURIComponent || window.escape;
   // Collect session data.
   for (var property in session) {
     if (typeof property === 'string' && property.substring(0, 2) !== '__') {
-      fragments.push('__' + property + '=' + escape(session[property]));
+      fragments.push('__' + property + '=' + escapeFn(session[property]));
     }
   }
   // Collect event data.
   for (var eventProperty in eventData) {
     if (typeof eventProperty === 'string' &&
         eventProperty.substring(0, 2) !== '__') {
-      fragments.push(eventProperty + '=' + escape(eventData[eventProperty]));
+      fragments.push(eventProperty + '=' + escapeFn(eventData[eventProperty]));
     }
   }
   return fragments.join('&');
