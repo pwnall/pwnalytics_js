@@ -13,6 +13,12 @@ Pwnalytics.initSession = function () {
   this.readHistory();
 };
 
+/** Sets up a new session, as if a new user would visit the site. */
+Pwnalytics.resetSession = function () {
+  Pwnalytics.dropSession();
+  Pwnalytics.initSession();
+};
+
 /** Merges the properties of the given object into the session object. */
 Pwnalytics.ammendSession = function (data) {
   for (var property in data) {

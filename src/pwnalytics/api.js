@@ -15,6 +15,7 @@
  * properties.
  * 
  * If the request is a function, calls the function after Pwnalytics is loaded.
+ * _paq will have additional methods properties available, such as reset().
  */
 Pwnalytics.api = function (request) {
   switch (typeof request) {
@@ -44,7 +45,10 @@ Pwnalytics.apiProxy = { push: Pwnalytics.api, length: 0 };
  */
 Pwnalytics.onLoad = function () {
   // Collect browser data.
-  Pwnalytics.initSession();
+  this.initSession();
+  
+  // Ammend the API proxy.
+  this.apiProxy.reset = Pwnalytics.resetSession;
   
   // The requests that got queued up before Pwnalytics got loaded.
   var requests = window._paq;
@@ -52,6 +56,6 @@ Pwnalytics.onLoad = function () {
   window._paq = Pwnalytics.apiProxy;
   // Honor the old requests.
   for (var i = 0; i < requests.length; i += 1) {
-    Pwnalytics.api(requests[i]);
+    this.api(requests[i]);
   }
 };

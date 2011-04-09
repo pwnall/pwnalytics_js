@@ -1,7 +1,6 @@
 describe("Pwnalytics history ", function() {
   beforeEach(function() {
-    Pwnalytics.dropSession();
-    Pwnalytics.initSession();
+    Pwnalytics.resetSession();
   });
   it("should have URL in session", function() {
     expect(Pwnalytics.session.url).toContain("http://");
@@ -25,8 +24,7 @@ describe("Pwnalytics history ", function() {
   describe("session URLs", function() {
     beforeEach(function() {
       spyOn(Pwnalytics, "normalizeUrl").andReturn("normalized");
-      Pwnalytics.dropSession();
-      Pwnalytics.initSession();
+      Pwnalytics.resetSession();
     });
     
     it("should normalize location", function() {

@@ -44,6 +44,11 @@ data to the server.
 * _paq.push({property: 'value'}) sets a session property
 * _paq.length counts events posted by _paq.push but not processed by the server
 
+After Pwnalytics is loaded, _paq is extended with a few more features. These
+should always be used in a function passed to _paq.push, to ensure that
+Pwnalytics has loaded.
+* _paq.reset resets the user ID in the session; can simulate different visitors
+
 
 BUILDING
 

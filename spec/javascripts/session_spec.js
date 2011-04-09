@@ -1,7 +1,6 @@
 describe("Pwnalytics session", function() {
   beforeEach(function() {
-    Pwnalytics.dropSession();
-    Pwnalytics.initSession();
+    Pwnalytics.resetSession();
   });
   
   it("should have a uid equal to the UID", function() {
@@ -37,6 +36,14 @@ describe("Pwnalytics session", function() {
     });
     it("should remove the stashed uid", function() {
       expect(Pwnalytics.readUid()).toBeFalsy();
+    });
+  });
+  
+  describe("resetSession", function() {
+    it("should change the session uid", function () {
+      var oldUid = Pwnalytics.session.uid;
+      Pwnalytics.resetSession();
+      expect(Pwnalytics.session.uid).toNotBe(oldUid);
     });
   });
 });

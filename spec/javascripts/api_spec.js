@@ -1,8 +1,7 @@
 describe("Pwnalytics API", function() {
   describe("_paq.push()", function() {
     beforeEach(function() {
-      Pwnalytics.dropSession();
-      Pwnalytics.initSession();
+      Pwnalytics.resetSession();
     });
     it("should post a property-less event when given a string", function() {
       spyOn(Pwnalytics, 'post');
@@ -17,6 +16,12 @@ describe("Pwnalytics API", function() {
     it("should ammend the session when given an object", function() {
       _paq.push({'ssd': 'session value'});
       expect(Pwnalytics.session.ssd).toBe('session value');
+    });
+    it("should call a function when given one", function () {
+      var callCount = 0;
+      var fn = function() { callCount += 1; }
+      _paq.push(fn);
+      expect(callCount).toBe(1);
     });
   });
   
@@ -39,6 +44,14 @@ describe("Pwnalytics API", function() {
         _paq.push(['anEvent', {someProp: 42}]);
         expect(_paq.length).toBe(1);
       });
+    });
+  });
+  
+  describe("_paq.reset", function () {
+    it("should change the session uid", function () {
+      var oldUid = Pwnalytics.session.uid;
+      _paq.reset();
+      expect(Pwnalytics.session.uid).toNotBe(oldUid);
     });
   });
   
