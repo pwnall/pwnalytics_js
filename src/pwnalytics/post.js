@@ -11,6 +11,8 @@ Pwnalytics.postUrl = 'bin/p.gif';
  */
 Pwnalytics.post = function (eventName, eventData) {
   this.session.time = (new Date()).getTime();
+  this.session.px = this.screenInfoString();
+  this.changePendingEvents(1);
   this.image(this.eventUrl(this.session, eventName, eventData));
 };
 
@@ -24,17 +26,18 @@ Pwnalytics.post = function (eventName, eventData) {
  */
 Pwnalytics.eventUrl = function (session, eventName, eventData) {
   var fragments = [this.postUrl + '?__=' + eventName];
+  var escapeFn = window.encodeURIComponent || window.escape;
   // Collect session data.
   for (var property in session) {
     if (typeof property === 'string' && property.substring(0, 2) !== '__') {
-      fragments.push('__' + property + '=' + escape(session[property]));
+      fragments.push('__' + property + '=' + escapeFn(session[property]));
     }
   }
   // Collect event data.
   for (var eventProperty in eventData) {
     if (typeof eventProperty === 'string' &&
         eventProperty.substring(0, 2) !== '__') {
-      fragments.push(eventProperty + '=' + escape(eventData[eventProperty]));
+      fragments.push(eventProperty + '=' + escapeFn(eventData[eventProperty]));
     }
   }
   return fragments.join('&');
@@ -44,6 +47,7 @@ Pwnalytics.eventUrl = function (session, eventName, eventData) {
 Pwnalytics.image = function (url) {
   var img = new Image();
   img.src = url;
+  img.onload = Pwnalytics.onImageLoad;
   var errorHandler = function () {
     setTimeout(function () {
       Pwnalytics.image(url);
@@ -52,3 +56,22 @@ Pwnalytics.image = function (url) {
   img.onerror = errorHandler;
   img.onabort = errorHandler;
 };
+
+/** Assigned to event-posting images' onload event handler. */
+Pwnalytics.onImageLoad = function (event) {
+  Pwnalytics.changePendingEvents(-1);
+};
+
+/**
+ * Changes the number of events that have not yet been posted to the server.
+ * 
+ * @param delta the number to change the events by (+1 to add a pending event,
+ *              -1 to subtract an event after it is posted)
+ */
+Pwnalytics.changePendingEvents = function (delta) {
+  this.pendingEvents += delta;
+  this.apiProxy.length = this.pendingEvents;
+};
+
+/** The number of events that have not yet been posted to the server. */
+Pwnalytics.pendingEvents = 0;

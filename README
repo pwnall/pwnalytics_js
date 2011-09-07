@@ -42,6 +42,12 @@ data to the server.
 * _paq.push(['eventname', {param: 'value'}]) sends an event with metadata
 * _paq.push(function() { ... }) calls a function after Pwnalytics is loaded
 * _paq.push({property: 'value'}) sets a session property
+* _paq.length counts events posted by _paq.push but not processed by the server
+
+After Pwnalytics is loaded, _paq is extended with a few more features. These
+should always be used in a function passed to _paq.push, to ensure that
+Pwnalytics has loaded.
+* _paq.reset() resets the session; the user UID will change as a consequence
 
 
 BUILDING
