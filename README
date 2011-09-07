@@ -1,6 +1,7 @@
 Pwnalytics is an open-source Web analytics solution. This project contains the
 two JavaScript pieces loaded by Website users.
 
+
 REQUIREMENTS
 
 The Pwnalytics JS has been tested and works against the following browsers:
